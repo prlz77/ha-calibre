@@ -26,10 +26,9 @@ RUN apt-get update \
         libxcb-xinerama0 \
         libgl1-mesa-glx \
         libxkbcommon-x11-0 \
+        calibre \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
-RUN wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sh /dev/stdin
 
 COPY app/requirements.txt /app/requirements.txt
 RUN pip3 install --no-cache-dir -r /app/requirements.txt
