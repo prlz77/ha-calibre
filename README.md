@@ -50,3 +50,9 @@ cd calibre_web_ui
 docker build -t calibre-web-ui .
 docker run -p 8080:8080 -v /path/to/your/library:/share/calibre calibre-web-ui
 ```
+
+## Support
+
+If you find this add-on useful and want to support its development, feel free to buy me a coffee! Any support is greatly appreciated. ☕️
+
+[![Buy Me A Coffee](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/prlz77)
