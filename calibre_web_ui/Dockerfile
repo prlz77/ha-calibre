@@ -1,38 +1,17 @@
-FROM ubuntu:22.04
+ARG BUILD_FROM
+FROM ${BUILD_FROM}
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Install system dependencies and calibre
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        wget \
-        xz-utils \
-        python3 \
-        python3-pip \
-        jq \
-        xdg-utils \
-        xvfb \
-        libegl1 \
-        libopengl0 \
-        libxcb-cursor0 \
-        libxcb-icccm4 \
-        libxcb-image0 \
-        libxcb-keysyms1 \
-        libxcb-randr0 \
-        libxcb-render-util0 \
-        libxcb-shape0 \
-        libxcb-xinerama0 \
-        libgl1-mesa-glx \
-        libxkbcommon-x11-0 \
+# Install Calibre CLI tools and Python/pip on Alpine
+RUN apk add --no-cache \
         calibre \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+        python3 \
+        py3-pip \
+        xvfb \
+        jq
 
 # Install Python dependencies
 COPY app/requirements.txt /app/requirements.txt
-RUN pip3 install --no-cache-dir -r /app/requirements.txt
+RUN pip3 install --no-cache-dir --break-system-packages -r /app/requirements.txt
 
 # Copy application files
 COPY app /app
@@ -45,7 +24,7 @@ LABEL \
     io.hass.name="Calibre Web UI" \
     io.hass.description="A lightweight web interface for Calibre book management" \
     io.hass.type="addon" \
-    io.hass.version="1.2.0"
+    io.hass.version="1.2.1"
 
 EXPOSE 8080
 WORKDIR /app

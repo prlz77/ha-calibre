@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/with-contenv bashio
 set -euo pipefail
 
 # HA Add-ons store user configuration in /data/options.json
