@@ -8,6 +8,24 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 app.secret_key = "super_secret_calibre_key_for_flash_messages"
 
+# Middleware to handle Home Assistant Ingress path
+class IngressMiddleware:
+    def __init__(self, app):
+        self.app = app
+
+    def __call__(self, environ, start_response):
+        # Home Assistant adds X-Ingress-Path header
+        ingress_path = environ.get('HTTP_X_INGRESS_PATH', '')
+        if ingress_path:
+            environ['SCRIPT_NAME'] = ingress_path
+            path_info = environ.get('PATH_INFO', '')
+            if path_info.startswith(ingress_path):
+                environ['PATH_INFO'] = path_info[len(ingress_path):]
+        
+        return self.app(environ, start_response)
+
+app.wsgi_app = IngressMiddleware(app.wsgi_app)
+
 CALIBRE_LIBRARY_PATH = os.environ.get("CALIBRE_LIBRARY_PATH", "/share/calibre")
 LOG_LEVEL = os.environ.get("LOG_LEVEL", "info")
 UPLOAD_FOLDER = "/tmp/calibre_uploads"
