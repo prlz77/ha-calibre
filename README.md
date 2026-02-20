@@ -1,3 +1,5 @@
+# Calibre Web UI — Home Assistant Add-on
+
 [![Buy Me A Coffee](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/prlz77)
 
 ![Calibre Web UI](screenshots/ui.png)
