@@ -4,7 +4,9 @@
 
 ![Calibre Web UI](screenshots/ui.png)
 
-A lightweight Home Assistant add-on that provides a web interface for [Calibre](https://calibre-ebook.com/), the open-source e-book management tool.
+Calibre Web UI is a lightweight Home Assistant add-on designed to bridge the gap between Calibre's powerful command-line tools and your local network devices. It provides a clean, responsive web interface that allows you to manage your book library, convert formats on the fly, and download books directly to your devices—including a specialized offline experience for Kindle's experimental browser.
+
+Whether you're looking to centralize your ebook collection on your Home Assistant instance or need a simple way to beam books to your Kindle without a USB cable, this add-on provides a seamless, resource-efficient solution.
 
 ## Features
 
