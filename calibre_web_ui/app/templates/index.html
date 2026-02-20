@@ -49,8 +49,9 @@
             transition: border-color 0.2s;
         }
 
-        .upload-box:hover {
+        .upload-box:hover, .upload-box.is-dragover {
             border-color: var(--gradient-start);
+            background-color: #f5f7ff;
         }
 
         .delete-btn {
@@ -121,7 +122,7 @@
         <!-- Upload & Sync Section -->
         <div class="columns">
             <div class="column {{ 'is-8' if sync_enabled else 'is-12' }}">
-                <div class="upload-box box">
+                <div class="upload-box box" id="uploadBox">
                     <h3 class="title is-4"><i class="fas fa-cloud-upload-alt"></i> Add New Book</h3>
                     <form action="{{ url_for('upload_book') }}" method="post" enctype="multipart/form-data">
                         <div class="field has-addons">
@@ -170,7 +171,7 @@
         <!-- Library Section -->
         <h3 class="title is-4 mt-6"><i class="fas fa-book"></i> Your Library ({{ books|length }} book{{ 's' if
             books|length != 1 }})</h3>
-        <div class="columns is-multiline {{ 'kindle-grid' if is_kindle }}">
+        <div class="columns is-multiline is-variable">
             {% for book in books %}
             <div class="column is-12-mobile is-6-tablet is-4-desktop">
                 <div class="card book-card">
@@ -261,14 +262,57 @@
         </div>
     </footer>
 
-    <!-- Script for dismissible notifications -->
+    <!-- Script for dismissible notifications and drag-and-drop -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Flash messages dismiss
             var deleteButtons = document.querySelectorAll('.notification .delete');
             for (var i = 0; i < deleteButtons.length; i++) {
                 deleteButtons[i].addEventListener('click', function () {
                     this.parentNode.style.display = 'none';
                 });
+            }
+
+            // Drag and Drop Logic
+            var uploadBox = document.getElementById('uploadBox');
+            var fileInput = document.querySelector('input[name="file"]');
+            var fileNameLabel = document.getElementById('fileName');
+            var uploadForm = uploadBox.querySelector('form');
+
+            if (uploadBox && fileInput) {
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(function(eventName) {
+                    uploadBox.addEventListener(eventName, function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }, false);
+                });
+
+                ['dragenter', 'dragover'].forEach(function(eventName) {
+                    uploadBox.addEventListener(eventName, function() {
+                        uploadBox.classList.add('is-dragover');
+                    }, false);
+                });
+
+                ['dragleave', 'drop'].forEach(function(eventName) {
+                    uploadBox.addEventListener(eventName, function() {
+                        uploadBox.classList.remove('is-dragover');
+                    }, false);
+                });
+
+                uploadBox.addEventListener('drop', function(e) {
+                    var dt = e.dataTransfer;
+                    var files = dt.files;
+
+                    if (files.length > 0) {
+                        fileInput.files = files;
+                        fileNameLabel.innerText = files[0].name;
+                        
+                        // Auto-submit after a short delay for better UX
+                        setTimeout(function() {
+                            uploadForm.submit();
+                        }, 100);
+                    }
+                }, false);
             }
         });
     </script>

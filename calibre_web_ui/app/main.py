@@ -124,15 +124,11 @@ def is_safe_library_path(filepath):
 @app.route("/")
 def index():
     books = get_books()
-    user_agent = request.headers.get("User-Agent", "")
-    is_kindle = "Kindle" in user_agent
-    
     return render_template(
         "index.html",
         books=books,
         sync_enabled=bool(CALIBRE_SYNC_DIR),
         sync_interval=CALIBRE_SYNC_INTERVAL,
-        is_kindle=is_kindle
     )
 
 
