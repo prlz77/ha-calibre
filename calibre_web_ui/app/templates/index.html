@@ -65,6 +65,26 @@
         .book-title {
             word-break: break-word;
         }
+
+        /* Kindle Experimental Browser Optimization:
+           Legacy grid fallback for browsers that don't support modern Flexbox (like Kindle)
+           or are viewed on small e-ink screens. */
+        @media screen and (max-width: 768px) {
+            .columns.is-variable {
+                display: block !important;
+            }
+
+            .columns.is-variable>.column {
+                float: left;
+                width: 50% !important;
+            }
+
+            .columns.is-variable:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+        }
     </style>
 </head>
 
@@ -150,7 +170,7 @@
         <!-- Library Section -->
         <h3 class="title is-4 mt-6"><i class="fas fa-book"></i> Your Library ({{ books|length }} book{{ 's' if
             books|length != 1 }})</h3>
-        <div class="columns is-multiline">
+        <div class="columns is-multiline is-variable">
             {% for book in books %}
             <div class="column is-12-mobile is-6-tablet is-4-desktop">
                 <div class="card book-card">
