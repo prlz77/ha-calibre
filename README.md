@@ -1,6 +1,6 @@
 # Calibre Web UI — Home Assistant Add-on
 
-[![Buy Me A Coffee](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/prlz77)
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/prlz77)
 
 ![Calibre Web UI](screenshots/ui.png)
 
@@ -57,4 +57,4 @@ docker run -p 8080:8080 -v /path/to/your/library:/share/calibre calibre-web-ui
 
 If you find this add-on useful and want to support its development, feel free to buy me a coffee! Any support is greatly appreciated. ☕️
 
-[![Buy Me A Coffee](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/prlz77)
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/prlz77)
