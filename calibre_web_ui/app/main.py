@@ -9,8 +9,12 @@ app = Flask(__name__)
 app.secret_key = "super_secret_calibre_key_for_flash_messages"
 
 CALIBRE_LIBRARY_PATH = os.environ.get("CALIBRE_LIBRARY_PATH", "/share/calibre")
+LOG_LEVEL = os.environ.get("LOG_LEVEL", "info")
 UPLOAD_FOLDER = "/tmp/calibre_uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+print(f"Flask App starting with LIBRARY_PATH: {CALIBRE_LIBRARY_PATH}")
+print(f"Log Level set to: {LOG_LEVEL}")
 
 def run_calibre_cmd(cmd_list):
     try:

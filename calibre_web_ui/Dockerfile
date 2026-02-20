@@ -11,6 +11,7 @@ RUN apt-get update \
         xz-utils \
         python3 \
         python3-pip \
+        jq \
         xdg-utils \
         xvfb \
         libegl1 \

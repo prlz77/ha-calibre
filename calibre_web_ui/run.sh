@@ -1,10 +1,15 @@
-#!/usr/bin/env bash
+# HA Add-ons store user configuration in /data/options.json
+CONFIG_PATH="/data/options.json"
 
-# HA Add-ons usually map data to /share or /data
-# Let's use /share/calibre for the library so it's accessible across the network and survives add-on updates.
-CALIBRE_LIBRARY_DIR="/share/calibre"
+# Read options using jq
+LIBRARY_PATH=$(jq --raw-output '.library_path' $CONFIG_PATH)
+LOG_LEVEL=$(jq --raw-output '.log_level' $CONFIG_PATH)
+
+# Use defaults if not provided
+CALIBRE_LIBRARY_DIR="${LIBRARY_PATH:-/share/calibre}"
 
 echo "Starting Calibre Web UI Add-on..."
+echo "Configuration: Library Path = $CALIBRE_LIBRARY_DIR, Log Level = $LOG_LEVEL"
 
 # Check if library directory exists, create if not
 if [ ! -d "$CALIBRE_LIBRARY_DIR" ]; then
@@ -19,6 +24,7 @@ echo "Initializing Calibre library database if not present..."
 calibredb list --library-path="$CALIBRE_LIBRARY_DIR" > /dev/null 2>&1
 
 export CALIBRE_LIBRARY_PATH="$CALIBRE_LIBRARY_DIR"
+export LOG_LEVEL="$LOG_LEVEL"
 
 echo "Starting Web Server..."
 # Run the Flask application via gunicorn
