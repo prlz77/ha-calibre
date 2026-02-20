@@ -286,7 +286,21 @@ def download_book(filepath):
 
     directory = os.path.dirname(abs_path)
     filename = os.path.basename(abs_path)
-    return send_from_directory(directory, filename, as_attachment=True)
+
+    # Kindle compatibility: The Kindle browser only allows downloading specific extensions (.mobi, .azw, .prc, .txt).
+    # If the file is .azw3 and the requester is a Kindle, we serve it as .azw so it can be downloaded.
+    user_agent = request.headers.get("User-Agent", "")
+    download_name = None
+    if "Kindle" in user_agent and filename.lower().endswith(".azw3"):
+        download_name = filename[:-1]  # Change .azw3 to .azw
+        logger.info("Renaming %s to %s for Kindle download", filename, download_name)
+
+    return send_from_directory(
+        directory, 
+        filename, 
+        as_attachment=True, 
+        download_name=download_name
+    )
 
 
 if __name__ == "__main__":
