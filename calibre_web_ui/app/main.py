@@ -35,16 +35,18 @@ print(f"Flask App starting with LIBRARY_PATH: {CALIBRE_LIBRARY_PATH}")
 print(f"Log Level set to: {LOG_LEVEL}")
 
 def run_calibre_cmd(cmd_list):
+    # Some calibre tools require a display server; xvfb-run provides a virtual one.
+    full_cmd = ["xvfb-run"] + cmd_list
     try:
         result = subprocess.run(
-            cmd_list,
+            full_cmd,
             check=True,
             capture_output=True,
             text=True
         )
         return result.stdout
     except subprocess.CalledProcessError as e:
-        print(f"Calibre error: {e.stderr}")
+        print(f"Calibre error (cmd: {' '.join(full_cmd)}): {e.stderr}")
         return None
 
 @app.route("/")
