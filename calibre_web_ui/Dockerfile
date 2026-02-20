@@ -1,13 +1,18 @@
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
-# Install Calibre CLI tools and Python/pip on Alpine
-RUN apk add --no-cache \
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install Calibre CLI tools and dependencies
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
         calibre \
         python3 \
-        py3-pip \
+        python3-pip \
         xvfb \
-        jq
+        jq \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
 COPY app/requirements.txt /app/requirements.txt
