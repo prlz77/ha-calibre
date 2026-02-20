@@ -170,7 +170,7 @@
         <!-- Library Section -->
         <h3 class="title is-4 mt-6"><i class="fas fa-book"></i> Your Library ({{ books|length }} book{{ 's' if
             books|length != 1 }})</h3>
-        <div class="columns is-multiline is-variable">
+        <div class="columns is-multiline {{ 'kindle-grid' if is_kindle }}">
             {% for book in books %}
             <div class="column is-12-mobile is-6-tablet is-4-desktop">
                 <div class="card book-card">
