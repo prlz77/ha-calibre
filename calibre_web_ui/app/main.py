@@ -45,10 +45,13 @@ class IngressMiddleware:
 app.wsgi_app = IngressMiddleware(app.wsgi_app)
 
 CALIBRE_LIBRARY_PATH = os.environ.get("CALIBRE_LIBRARY_PATH", "/share/calibre")
+CALIBRE_SYNC_DIR = os.environ.get("CALIBRE_SYNC_DIR", "")
 UPLOAD_FOLDER = "/tmp/calibre_uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 logger.info("Flask App starting with LIBRARY_PATH: %s", CALIBRE_LIBRARY_PATH)
+if CALIBRE_SYNC_DIR:
+    logger.info("Sync Directory enabled: %s", CALIBRE_SYNC_DIR)
 logger.info("Log Level set to: %s", LOG_LEVEL)
 
 
@@ -120,7 +123,7 @@ def is_safe_library_path(filepath):
 @app.route("/")
 def index():
     books = get_books()
-    return render_template("index.html", books=books)
+    return render_template("index.html", books=books, sync_enabled=bool(CALIBRE_SYNC_DIR))
 
 
 @app.route("/upload", methods=["POST"])
@@ -234,6 +237,34 @@ def delete_book(book_id):
         flash("Book deleted successfully", "success")
     else:
         flash("Failed to delete book", "error")
+
+    return redirect(url_for("index"))
+
+
+@app.route("/sync", methods=["POST"])
+def sync_directory():
+    if not CALIBRE_SYNC_DIR:
+        flash("Sync directory not configured", "error")
+        return redirect(url_for("index"))
+
+    if not os.path.isdir(CALIBRE_SYNC_DIR):
+        flash(f"Sync directory does not exist: {CALIBRE_SYNC_DIR}", "error")
+        return redirect(url_for("index"))
+
+    logger.info("Starting sync from directory: %s", CALIBRE_SYNC_DIR)
+    
+    # Using calibredb add -r --automerge ignore to avoid duplicates
+    result = run_calibre_cmd([
+        "calibredb", "add",
+        "-r", CALIBRE_SYNC_DIR,
+        "--library-path", CALIBRE_LIBRARY_PATH,
+        "--automerge", "ignore",
+    ])
+
+    if result is not None:
+        flash("Sync completed successfully", "success")
+    else:
+        flash("Sync failed or encountered errors", "error")
 
     return redirect(url_for("index"))
 

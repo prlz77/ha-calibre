@@ -30,7 +30,7 @@ LABEL \
     io.hass.name="Calibre Web UI" \
     io.hass.description="A lightweight web interface for Calibre book management" \
     io.hass.type="addon" \
-    io.hass.version="1.2.2"
+    io.hass.version="1.3.0"
 
 EXPOSE 8080
 WORKDIR /app

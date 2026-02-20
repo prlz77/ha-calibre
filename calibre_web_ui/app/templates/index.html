@@ -98,30 +98,49 @@
         {% endif %}
         {% endwith %}
 
-        <!-- Upload Section -->
-        <div class="upload-box box">
-            <h3 class="title is-4"><i class="fas fa-cloud-upload-alt"></i> Add New Book</h3>
-            <form action="{{ url_for('upload_book') }}" method="post" enctype="multipart/form-data">
-                <div class="field has-addons">
-                    <div class="control is-expanded">
-                        <div class="file has-name is-fullwidth is-link">
-                            <label class="file-label">
-                                <input class="file-input" type="file" name="file" required
-                                    accept=".epub,.mobi,.azw3,.pdf,.txt,.fb2,.lit,.rtf,.odt,.cbz,.cbr"
-                                    onchange="document.getElementById('fileName').innerText = this.files[0].name;">
-                                <span class="file-cta">
-                                    <span class="file-icon"><i class="fas fa-upload"></i></span>
-                                    <span class="file-label">Choose a file…</span>
-                                </span>
-                                <span class="file-name" id="fileName">No file selected</span>
-                            </label>
+        <!-- Upload & Sync Section -->
+        <div class="columns">
+            <div class="column {{ 'is-8' if sync_enabled else 'is-12' }}">
+                <div class="upload-box box">
+                    <h3 class="title is-4"><i class="fas fa-cloud-upload-alt"></i> Add New Book</h3>
+                    <form action="{{ url_for('upload_book') }}" method="post" enctype="multipart/form-data">
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                <div class="file has-name is-fullwidth is-link">
+                                    <label class="file-label">
+                                        <input class="file-input" type="file" name="file" required
+                                            accept=".epub,.mobi,.azw3,.pdf,.txt,.fb2,.lit,.rtf,.odt,.cbz,.cbr"
+                                            onchange="document.getElementById('fileName').innerText = this.files[0].name;">
+                                        <span class="file-cta">
+                                            <span class="file-icon"><i class="fas fa-upload"></i></span>
+                                            <span class="file-label">Choose a file…</span>
+                                        </span>
+                                        <span class="file-name" id="fileName">No file selected</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="control">
+                                <button type="submit" class="button is-link">Upload</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="control">
-                        <button type="submit" class="button is-link">Upload</button>
-                    </div>
+                    </form>
                 </div>
-            </form>
+            </div>
+            {% if sync_enabled %}
+            <div class="column is-4">
+                <div class="upload-box box has-background-link-light">
+                    <h3 class="title is-4"><i class="fas fa-sync"></i> Sync Folder</h3>
+                    <p class="is-size-7 mb-4">Bulk add books from the configured sync directory.</p>
+                    <form action="{{ url_for('sync_directory') }}" method="post"
+                        onsubmit="this.querySelector('button').classList.add('is-loading');">
+                        <button type="submit" class="button is-link is-fullwidth">
+                            <span class="icon"><i class="fas fa-sync-alt"></i></span>
+                            <span>Sync Now</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
         </div>
 
         <!-- Library Section -->
