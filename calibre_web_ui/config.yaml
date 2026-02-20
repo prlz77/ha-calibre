@@ -15,4 +15,3 @@ options: {}
 schema: {}
 ports:
   8080/tcp: 8080
-image: "{arch}-addon-calibre-web-ui"
