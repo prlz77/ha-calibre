@@ -1,5 +1,4 @@
-ARG BUILD_FROM=ubuntu:22.04
-FROM ${BUILD_FROM}
+FROM ubuntu:22.04
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
