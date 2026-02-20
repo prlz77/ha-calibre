@@ -10,6 +10,7 @@ RUN apt-get update \
         python3 \
         python3-pip \
         xvfb \
+        xauth \
         jq \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -29,7 +30,7 @@ LABEL \
     io.hass.name="Calibre Web UI" \
     io.hass.description="A lightweight web interface for Calibre book management" \
     io.hass.type="addon" \
-    io.hass.version="1.2.1"
+    io.hass.version="1.2.2"
 
 EXPOSE 8080
 WORKDIR /app
