@@ -46,6 +46,7 @@ app.wsgi_app = IngressMiddleware(app.wsgi_app)
 
 CALIBRE_LIBRARY_PATH = os.environ.get("CALIBRE_LIBRARY_PATH", "/share/calibre")
 CALIBRE_SYNC_DIR = os.environ.get("CALIBRE_SYNC_DIR", "")
+CALIBRE_SYNC_INTERVAL = int(os.environ.get("CALIBRE_SYNC_INTERVAL", "0"))
 UPLOAD_FOLDER = "/tmp/calibre_uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
@@ -123,7 +124,12 @@ def is_safe_library_path(filepath):
 @app.route("/")
 def index():
     books = get_books()
-    return render_template("index.html", books=books, sync_enabled=bool(CALIBRE_SYNC_DIR))
+    return render_template(
+        "index.html",
+        books=books,
+        sync_enabled=bool(CALIBRE_SYNC_DIR),
+        sync_interval=CALIBRE_SYNC_INTERVAL,
+    )
 
 
 @app.route("/upload", methods=["POST"])

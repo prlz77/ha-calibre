@@ -28,7 +28,26 @@ calibredb list --library-path="$CALIBRE_LIBRARY_DIR" > /dev/null 2>&1 || true
 
 export CALIBRE_LIBRARY_PATH="$CALIBRE_LIBRARY_DIR"
 export CALIBRE_SYNC_DIR="$SYNC_DIR"
+SYNC_INTERVAL=$(jq --raw-output '.sync_interval // 0' "$CONFIG_PATH")
+export CALIBRE_SYNC_INTERVAL="$SYNC_INTERVAL"
 export LOG_LEVEL="$LOG_LEVEL"
+
+# Background Sync Loop
+if [[ -n "$SYNC_DIR" ]] && [[ "$SYNC_INTERVAL" -gt 0 ]]; then
+    (
+        echo "Autosync enabled: every $SYNC_INTERVAL minutes"
+        while true; do
+            sleep "$((SYNC_INTERVAL * 60))"
+            echo "Starting periodic sync..."
+            xvfb-run -a calibredb add \
+                -r "$SYNC_DIR" \
+                --library-path "$CALIBRE_LIBRARY_DIR" \
+                --automerge ignore \
+                > /dev/null 2>&1 || echo "Periodic sync encountered errors"
+            echo "Periodic sync completed."
+        done
+    ) &
+fi
 
 echo "Starting Web Server..."
 # Run Flask via gunicorn (2 workers suitable for embedded/HA hardware)

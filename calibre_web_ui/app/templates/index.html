@@ -130,7 +130,11 @@
             <div class="column is-4">
                 <div class="upload-box box has-background-link-light">
                     <h3 class="title is-4"><i class="fas fa-sync"></i> Sync Folder</h3>
-                    <p class="is-size-7 mb-4">Bulk add books from the configured sync directory.</p>
+                    <p class="is-size-7 mb-2">Bulk add books from the configured sync directory.</p>
+                    {% if sync_interval > 0 %}
+                    <p class="is-size-7 mb-4 has-text-link"><i class="fas fa-clock"></i> Autosync active: Every {{
+                        sync_interval }} min</p>
+                    {% endif %}
                     <form action="{{ url_for('sync_directory') }}" method="post"
                         onsubmit="this.querySelector('button').classList.add('is-loading');">
                         <button type="submit" class="button is-link is-fullwidth">

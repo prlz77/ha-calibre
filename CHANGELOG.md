@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.4.0
+
+### Added
+- **Autosync** — New feature to periodically sync books from a local directory.
+- **Improved Resource Efficiency** — Background sync loop runs in bash to minimize RAM/CPU usage.
+
+### Changed
+- Added `sync_interval` configuration option.
+- Updated UI to display autosync status.
+
 ## 1.3.0
 
 ### Added

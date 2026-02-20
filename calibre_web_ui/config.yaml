@@ -1,6 +1,6 @@
 name: "Calibre Web UI"
 description: "A lightweight web interface for the Calibre CLI, allowing book management, conversion, and Kindle LAN access."
-version: "1.3.0"
+version: "1.4.0"
 slug: "calibre_web_ui"
 ingress: true
 ingress_port: 8080
@@ -16,10 +16,12 @@ map:
 options:
   library_path: "/share/calibre"
   sync_dir: ""
+  sync_interval: 0
   log_level: "info"
 schema:
   library_path: "str"
   sync_dir: "str?"
+  sync_interval: "int(0,)"
   log_level: "list(debug|info|warning|error)"
 ports:
   8080/tcp: 8080

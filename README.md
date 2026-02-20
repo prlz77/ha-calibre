@@ -4,6 +4,7 @@ A lightweight Home Assistant add-on that provides a web interface for [Calibre](
 
 ## Features
 
+- **Autosync** — Automatically sync your books at a configurable interval
 - **Directory Sync** — Bulk add books from a local directory
 - **Book Library** — Browse your Calibre library from any device on your LAN
 - **Upload Books** — Add EPUB, MOBI, PDF, and other e-book formats via the web UI
@@ -28,6 +29,7 @@ A lightweight Home Assistant add-on that provides a web interface for [Calibre](
 |--------|---------|-------------|
 | `library_path` | `/share/calibre` | Path to the Calibre library on the HA host |
 | `sync_dir` | (empty) | Optional path to a folder to sync books from |
+| `sync_interval` | `0` (disabled) | Periodic sync interval in minutes |
 | `log_level` | `info` | Logging verbosity: `debug`, `info`, `warning`, `error` |
 
 ## Accessing from Kindle
