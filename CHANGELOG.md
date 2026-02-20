@@ -1,6 +1,16 @@
 # Changelog
 
-## 1.2.0
+## 1.3.0
+
+### Added
+- **Directory Sync** — New feature to bulk add books from a configured local directory.
+- **Sync Library UI** — Added a "Sync Now" button in the web interface.
+- **Plugin Icon** — Replaced default icon with a custom book-themed icon.
+
+### Changed
+- Updated configuration options to include `sync_dir`.
+
+## 1.2.2
 
 ### Security
 - Fixed path traversal vulnerability in download endpoint

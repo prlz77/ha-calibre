@@ -4,6 +4,7 @@ A lightweight Home Assistant add-on that provides a web interface for [Calibre](
 
 ## Features
 
+- **Directory Sync** — Bulk add books from a local directory
 - **Book Library** — Browse your Calibre library from any device on your LAN
 - **Upload Books** — Add EPUB, MOBI, PDF, and other e-book formats via the web UI
 - **Format Conversion** — Convert books between EPUB, MOBI, AZW3, and PDF using Calibre's `ebook-convert`
@@ -26,6 +27,7 @@ A lightweight Home Assistant add-on that provides a web interface for [Calibre](
 | Option | Default | Description |
 |--------|---------|-------------|
 | `library_path` | `/share/calibre` | Path to the Calibre library on the HA host |
+| `sync_dir` | (empty) | Optional path to a folder to sync books from |
 | `log_level` | `info` | Logging verbosity: `debug`, `info`, `warning`, `error` |
 
 ## Accessing from Kindle
