@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.2
+
+### Added
+- **Drag & Drop Upload** — You can now drag and drop book files directly onto the "Add New Book" box in the web UI.
+
 ## 1.4.1
 
 ### Fixed
