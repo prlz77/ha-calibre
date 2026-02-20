@@ -16,6 +16,7 @@
 - **Directory Sync** — New feature to bulk add books from a configured local directory.
 - **Sync Library UI** — Added a "Sync Now" button in the web interface.
 - **Plugin Icon** — Replaced default icon with a custom book-themed icon.
+- **Support** — Added "Buy Me a Coffee" link to the web interface and README.
 
 ### Changed
 - Updated configuration options to include `sync_dir`.
