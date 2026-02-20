@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.1
+
+### Fixed
+- **Kindle Compatibility** — Automatically serve `.azw3` files as `.azw` to bypass Kindle browser download restrictions.
+
 ## 1.4.0
 
 ### Added

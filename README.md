@@ -45,9 +45,6 @@ Whether you're looking to centralize your ebook collection on your Home Assistan
 3. Navigate to `http://<your-ha-ip>:8080`
 4. Browse and download books directly to your Kindle
 
-> [!TIP]
-> **AZW3 Support:** While Kindles natively support AZW3, their web browser is often restricted to downloading `.mobi` or `.azw` extensions. This add-on automatically renames `.azw3` files to `.azw` during download when it detects a Kindle browser to bypass this restriction.
-
 ## Development
 
 ```bash
