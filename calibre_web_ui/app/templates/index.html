@@ -1,31 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calibre Web UI</title>
-    <!-- Bulma CSS for modern styling quickly -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Locally bundled CSS for offline LAN access -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome.min.css') }}">
     <style>
-        body { background-color: #f5f5f5; }
-        .hero { background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%); }
-        .book-card { height: 100%; transition: transform 0.2s; }
-        .book-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .format-tag { cursor: pointer; }
+        :root {
+            --gradient-start: #667eea;
+            --gradient-end: #764ba2;
+        }
+
+        body {
+            background-color: #f0f2f5;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+        }
+
+        .book-card {
+            height: 100%;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-radius: 12px;
+        }
+
+        .book-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .format-tag {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .format-tag:hover {
+            filter: brightness(0.9);
+        }
+
+        .upload-box {
+            border: 2px dashed #dbdbdb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: border-color 0.2s;
+        }
+
+        .upload-box:hover {
+            border-color: var(--gradient-start);
+        }
+
+        .delete-btn {
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .delete-btn:hover {
+            opacity: 1;
+        }
+
+        .book-title {
+            word-break: break-word;
+        }
     </style>
 </head>
+
 <body>
 
-    <section class="hero is-info is-small">
+    <section class="hero is-medium">
         <div class="hero-body">
             <div class="container">
-                <h1 class="title">
+                <h1 class="title has-text-white">
                     <i class="fas fa-book-open"></i> Calibre Web Hub
                 </h1>
-                <h2 class="subtitle">
-                    Local network reading and mangement
+                <h2 class="subtitle has-text-white-ter">
+                    Local network book management and reading
                 </h2>
             </div>
         </div>
@@ -35,25 +87,28 @@
 
         <!-- Flash messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="notification is-{{ 'danger' if category == 'error' else category }} is-light">
-                        <button class="delete"></button>
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="notification is-{{ 'danger' if category == 'error' else ('warning' if category == 'warning' else 'success') }} is-light"
+            id="flash-{{ loop.index }}">
+            <button class="delete" aria-label="close"></button>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
         {% endwith %}
 
         <!-- Upload Section -->
-        <div class="box">
-            <h3 class="title is-4">Add New Book</h3>
+        <div class="upload-box box">
+            <h3 class="title is-4"><i class="fas fa-cloud-upload-alt"></i> Add New Book</h3>
             <form action="{{ url_for('upload_book') }}" method="post" enctype="multipart/form-data">
                 <div class="field has-addons">
-                    <div class="control">
-                        <div class="file has-name is-info">
+                    <div class="control is-expanded">
+                        <div class="file has-name is-fullwidth is-link">
                             <label class="file-label">
-                                <input class="file-input" type="file" name="file" required onchange="document.getElementById('fileName').innerText = this.files[0].name;">
+                                <input class="file-input" type="file" name="file" required
+                                    accept=".epub,.mobi,.azw3,.pdf,.txt,.fb2,.lit,.rtf,.odt,.cbz,.cbr"
+                                    onchange="document.getElementById('fileName').innerText = this.files[0].name;">
                                 <span class="file-cta">
                                     <span class="file-icon"><i class="fas fa-upload"></i></span>
                                     <span class="file-label">Choose a file…</span>
@@ -63,74 +118,112 @@
                         </div>
                     </div>
                     <div class="control">
-                        <button type="submit" class="button is-info">Upload</button>
+                        <button type="submit" class="button is-link">Upload</button>
                     </div>
                 </div>
             </form>
         </div>
 
         <!-- Library Section -->
-        <h3 class="title is-4 mt-6">Your Library</h3>
+        <h3 class="title is-4 mt-6"><i class="fas fa-book"></i> Your Library ({{ books|length }} book{{ 's' if
+            books|length != 1 }})</h3>
         <div class="columns is-multiline">
             {% for book in books %}
             <div class="column is-12-mobile is-6-tablet is-4-desktop">
-                <div class="card book-card box">
+                <div class="card book-card">
                     <div class="card-content">
                         <div class="media">
-                            <div class="media-content">
-                                <p class="title is-5">{{ book.title }}</p>
-                                <p class="subtitle is-6">by {{ book.authors }}</p>
+                            <div class="media-content" style="overflow: hidden;">
+                                <p class="title is-5 book-title">{{ book.title }}</p>
+                                <p class="subtitle is-6">
+                                    {% if book.authors %}
+                                    by {{ book.authors }}
+                                    {% else %}
+                                    <em>Unknown author</em>
+                                    {% endif %}
+                                </p>
                             </div>
                         </div>
 
                         <div class="content">
-                            <p class="is-size-7 mb-2"><strong>Formats available:</strong></p>
+                            {% if book.formats %}
+                            <p class="is-size-7 mb-2 has-text-weight-bold">
+                                <i class="fas fa-file-alt"></i> Download:
+                            </p>
                             <div class="tags">
                                 {% for fmt_path in book.formats %}
-                                    {% set fmt_ext = fmt_path.split('.')[-1] | upper %}
-                                    <a href="{{ url_for('download_book', filepath=fmt_path) }}" class="tag is-primary is-light format-tag">
-                                        {{ fmt_ext }} <i class="fas fa-download ml-1"></i>
-                                    </a>
+                                {% set fmt_ext = fmt_path.split('.')[-1] | upper %}
+                                <a href="{{ url_for('download_book', filepath=fmt_path.lstrip('/')) }}"
+                                    class="tag is-link is-light format-tag" title="Download {{ fmt_ext }}">
+                                    {{ fmt_ext }} <i class="fas fa-download ml-1"></i>
+                                </a>
                                 {% endfor %}
                             </div>
+                            {% else %}
+                            <p class="is-size-7 has-text-grey">No formats available</p>
+                            {% endif %}
 
                             <hr>
-                            <p class="is-size-7 mb-2"><strong>Convert to:</strong></p>
-                            <form action="{{ url_for('convert_book', book_id=book.id) }}" method="post" class="is-flex" style="gap: 5px;">
-                                <div class="select is-small">
-                                    <select name="format">
-                                        <option value="mobi">MOBI</option>
-                                        <option value="azw3">AZW3</option>
-                                        <option value="epub">EPUB</option>
-                                        <option value="pdf">PDF</option>
-                                    </select>
-                                </div>
-                                <button type="submit" class="button is-small is-link is-outlined">Convert</button>
-                            </form>
+                            <div class="is-flex is-justify-content-space-between is-align-items-center">
+                                <!-- Convert form -->
+                                <form action="{{ url_for('convert_book', book_id=book.id) }}" method="post"
+                                    class="is-flex is-align-items-center" style="gap: 6px;">
+                                    <div class="select is-small">
+                                        <select name="format">
+                                            <option value="epub">EPUB</option>
+                                            <option value="mobi">MOBI</option>
+                                            <option value="azw3">AZW3</option>
+                                            <option value="pdf">PDF</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="button is-small is-link is-outlined"
+                                        title="Convert to selected format">
+                                        <span class="icon is-small"><i class="fas fa-sync-alt"></i></span>
+                                        <span>Convert</span>
+                                    </button>
+                                </form>
+
+                                <!-- Delete form -->
+                                <form action="{{ url_for('delete_book', book_id=book.id) }}" method="post"
+                                    onsubmit="return confirm('Delete &quot;{{ book.title }}&quot;?');">
+                                    <button type="submit" class="button is-small is-danger is-outlined delete-btn"
+                                        title="Delete this book">
+                                        <span class="icon is-small"><i class="fas fa-trash-alt"></i></span>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             {% else %}
             <div class="column is-12">
-                <div class="notification is-warning is-light">
-                    Your library is currently empty. Upload an EPUB or MOBI file to get started!
+                <div class="notification is-info is-light has-text-centered">
+                    <p class="is-size-5 mb-2"><i class="fas fa-inbox"></i></p>
+                    <p>Your library is empty. Upload an EPUB, MOBI, or PDF file to get started!</p>
                 </div>
             </div>
             {% endfor %}
         </div>
     </div>
 
+    <footer class="footer" style="padding: 1.5rem;">
+        <div class="content has-text-centered has-text-grey-light">
+            <p class="is-size-7">Calibre Web Hub — Powered by Calibre CLI</p>
+        </div>
+    </footer>
+
     <!-- Script for dismissible notifications -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
-                const $notification = $delete.parentNode;
-                $delete.addEventListener('click', () => {
-                    $notification.parentNode.removeChild($notification);
+        document.addEventListener('DOMContentLoaded', function () {
+            var deleteButtons = document.querySelectorAll('.notification .delete');
+            for (var i = 0; i < deleteButtons.length; i++) {
+                deleteButtons[i].addEventListener('click', function () {
+                    this.parentNode.style.display = 'none';
                 });
-            });
+            }
         });
     </script>
 </body>
+
 </html>

@@ -1,0 +1,35 @@
+# Changelog
+
+## 1.2.0
+
+### Security
+- Fixed path traversal vulnerability in download endpoint
+- Replaced hardcoded Flask secret key with random generation at startup
+
+### Fixed
+- Fixed convert endpoint — was using invalid `calibredb show_metadata --as-json` flag
+- Fixed book listing — `calibredb list` now requests `--fields title,authors,formats` to include format paths
+- Fixed download URL construction — paths are now properly stripped of leading `/`
+- Fixed typo: "mangement" → "management"
+
+### Added
+- **Delete books** — new delete button per book card
+- **Offline UI** — Bulma CSS and Font Awesome are now bundled locally (no CDN dependency)
+- **Book count** shown in library header
+- **File type filter** on upload input
+- Proper Python `logging` module instead of `print()` statements
+- Command timeouts (120s) to prevent hung calibre processes
+- `.dockerignore` to reduce Docker image size
+- Home Assistant labels in Dockerfile
+- `README.md` and `CHANGELOG.md` documentation
+
+### Changed
+- Reduced gunicorn workers from 4 to 2 (better for embedded HA hardware)
+- Added `--timeout 120` to gunicorn for long conversions
+- Added bash shebang and `set -euo pipefail` to `run.sh`
+- Improved UI visual design and empty state messaging
+- Kindle-compatible JavaScript (no ES6 arrow functions)
+
+## 1.1.1
+
+- Initial release with book listing, upload, conversion, and download

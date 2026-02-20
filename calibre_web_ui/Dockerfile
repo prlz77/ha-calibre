@@ -1,10 +1,11 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:14.3.1
-FROM ubuntu:22.04
+ARG BUILD_FROM=ubuntu:22.04
+FROM ${BUILD_FROM}
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Install system dependencies and calibre
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         wget \
@@ -30,13 +31,22 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Python dependencies
 COPY app/requirements.txt /app/requirements.txt
 RUN pip3 install --no-cache-dir -r /app/requirements.txt
 
+# Copy application files
 COPY app /app
 COPY run.sh /
 
 RUN chmod a+x /run.sh
+
+# Labels for Home Assistant
+LABEL \
+    io.hass.name="Calibre Web UI" \
+    io.hass.description="A lightweight web interface for Calibre book management" \
+    io.hass.type="addon" \
+    io.hass.version="1.2.0"
 
 EXPOSE 8080
 WORKDIR /app
