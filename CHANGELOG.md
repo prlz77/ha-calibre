@@ -4,6 +4,7 @@
 
 ### Fixed
 - **Kindle Compatibility** — Automatically serve `.azw3` files as `.azw` to bypass Kindle browser download restrictions.
+- **Kindle UI Layout** — Added legacy CSS fallback to ensure a 2-column grid on Kindle browsers (which lack Flexbox support).
 
 ## 1.4.0
 
