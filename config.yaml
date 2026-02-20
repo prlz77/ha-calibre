@@ -1,0 +1,18 @@
+name: "Calibre Web UI"
+description: "A lightweight web interface for the Calibre CLI, allowing book management, conversion, and Kindle LAN access."
+version: "1.0.0"
+slug: "calibre_web_ui"
+init: false
+arch:
+  - aarch64
+  - amd64
+  - armv7
+  - armhf
+  - i386
+map:
+  - share:rw
+options: {}
+schema: {}
+ports:
+  8080/tcp: 8080
+image: "{arch}-addon-calibre-web-ui"
