@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.5.2
+
+### Added
+- **Home Assistant Integration** — Added "Add to Home Assistant" button to README for easier installation.
+
+### Fixed
+- **Add-on Documentation** — Fixed documentation visibility by placing README in the add-on directory.
+
 ## 1.5.1
 
 ### Fixed
