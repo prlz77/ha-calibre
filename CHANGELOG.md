@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.5.0
+
+### Added
+- **Quality Checks** — Integrated `ruff` for Rust-speed linting and formatting.
+- **Automated Testing** — Added `pytest` suite for core web endpoints.
+- **CI/CD Pipeline** — Added GitHub Actions workflow to run tests on every push.
+- **Pre-commit Hooks** — Standardized local development with automated quality checks.
+- **Compact Mobile View** — Optimized the UI for e-readers and small screens by reducing vertical spacing and switching to a list view.
+
+### Changed
+- Generalized UI and documentation to support all e-readers/mobile devices instead of focusing on Kindle specifically.
+- Restructured README with a friendlier donation invite and quality badges.
+
+
 ## 1.4.2
 
 ### Added
