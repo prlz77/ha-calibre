@@ -68,9 +68,8 @@
             word-break: break-word;
         }
 
-        /* Kindle Experimental Browser Optimization:
-           Legacy grid fallback for browsers that don't support modern Flexbox (like Kindle)
-           or are viewed on small e-ink screens. */
+        /* Responsive Mobile Layout:
+           Renders the library layout as a vertical list rather than a grid on smaller screens. */
         @media screen and (max-width: 768px) {
             .columns.is-variable {
                 display: block !important;
