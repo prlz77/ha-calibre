@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.5.1
+
+### Fixed
+- **UI Layout** — Fixed overlap between book title and author on small screens.
+
+### Added
+- **Orientation-based Layout** — Automatically switches between List (vertical) and Grid (horizontal) views.
+
 ## 1.5.0
 
 ### Added

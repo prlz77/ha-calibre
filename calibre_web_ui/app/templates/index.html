@@ -69,9 +69,9 @@
         }
 
         /* Mobile & Legacy Browser List Fallback
-           Ensures books stack vertically on small screens (<768px)
+           Ensures books stack vertically on vertical (portrait) screens
            even if the browser doesn't support modern Flexbox. */
-        @media screen and (max-width: 768px) {
+        @media (orientation: portrait) {
             .columns {
                 display: block !important;
             }
@@ -104,6 +104,7 @@
             .subtitle.is-6 {
                 font-size: 0.85rem !important;
                 margin-bottom: 0.5rem !important;
+                margin-top: 0 !important;
             }
         }
     </style>
