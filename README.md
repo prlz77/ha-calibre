@@ -3,6 +3,7 @@
 [![Build Status](https://github.com/prlz77/ha-calibre/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/prlz77/ha-calibre/actions/workflows/ci.yml)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Open your Home Assistant instance and show the add repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/repository_add.svg)](https://my.home-assistant.io/redirect/repository_add/?repository_url=https%3A%2F%2Fgithub.com%2Fprlz77%2Fha-calibre)
 
 **TL;DR**: Convert your e-books to any format and download them on your e-reader through a clean web interface.
 
