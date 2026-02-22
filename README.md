@@ -6,8 +6,6 @@
 
 **TL;DR**: Convert your e-books to any format and download them on your e-reader through a clean web interface.
 
-I maintain this Home Assistant add-on in my free time. Keeping up with upstream changes, Home Assistant updates, and testing on real devices takes time and effort.
-
 If this add-on saves you time, makes your ebook setup easier, or helps you bridge the gap between Calibre and your family's e-readers, I would be very grateful for your support!
 
 [![Buy me a coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/prlz77)
