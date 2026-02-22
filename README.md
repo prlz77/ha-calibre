@@ -1,6 +1,14 @@
-# Calibre Web UI — Home Assistant Add-on
+# Home Assistant Add-on: Calibre Web UI
 
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/prlz77)
+[![Build Status](https://github.com/prlz77/ha-calibre/actions/workflows/ci.yml/badge.svg)](https://github.com/prlz77/ha-calibre/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/prlz77/ha-calibre/graph/badge.svg?token=YOUR_TOKEN_HERE)](https://codecov.io/gh/prlz77/ha-calibre)
+[![Buy me a coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/prlz77)
+
+I maintain this Home Assistant add-on in my free time. Keeping up with upstream changes, Home Assistant updates, and testing on real devices takes time and effort. 
+
+If this add-on saves you time, makes your ebook setup easier, or helps you bridge the gap between Calibre and your family's Kindles, I would be very grateful for your support!
+
+---
 
 ![Calibre Web UI](screenshots/ui.png)
 
@@ -55,6 +63,4 @@ docker run -p 8080:8080 -v /path/to/your/library:/share/calibre calibre-web-ui
 
 ## Support
 
-If you find this add-on useful and want to support its development, feel free to buy me a coffee! Any support is greatly appreciated. ☕️
-
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/prlz77)
+Got questions, discovered a bug, or have a feature request? Please create an issue on [GitHub](https://github.com/prlz77/ha-calibre).
