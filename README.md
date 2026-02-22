@@ -2,6 +2,7 @@
 
 [![Build Status](https://github.com/prlz77/ha-calibre/actions/workflows/ci.yml/badge.svg)](https://github.com/prlz77/ha-calibre/actions/workflows/ci.yml)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Buy me a coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/prlz77)
 
 I maintain this Home Assistant add-on in my free time. Keeping up with upstream changes, Home Assistant updates, and testing on real devices takes time and effort.
