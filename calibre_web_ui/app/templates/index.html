@@ -67,25 +67,6 @@
         .book-title {
             word-break: break-word;
         }
-
-        /* Responsive Mobile Layout:
-           Renders the library layout as a vertical list rather than a grid on smaller screens. */
-        @media screen and (max-width: 768px) {
-            .columns.is-variable {
-                display: block !important;
-            }
-
-            .columns.is-variable>.column {
-                float: left;
-                width: 100% !important;
-            }
-
-            .columns.is-variable:after {
-                content: "";
-                display: table;
-                clear: both;
-            }
-        }
     </style>
 </head>
 
