@@ -49,7 +49,8 @@
             transition: border-color 0.2s;
         }
 
-        .upload-box:hover, .upload-box.is-dragover {
+        .upload-box:hover,
+        .upload-box.is-dragover {
             border-color: var(--gradient-start);
             background-color: #f5f7ff;
         }
@@ -77,7 +78,7 @@
 
             .columns.is-variable>.column {
                 float: left;
-                width: 50% !important;
+                width: 100% !important;
             }
 
             .columns.is-variable:after {
@@ -280,26 +281,26 @@
             var uploadForm = uploadBox.querySelector('form');
 
             if (uploadBox && fileInput) {
-                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(function(eventName) {
-                    uploadBox.addEventListener(eventName, function(e) {
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(function (eventName) {
+                    uploadBox.addEventListener(eventName, function (e) {
                         e.preventDefault();
                         e.stopPropagation();
                     }, false);
                 });
 
-                ['dragenter', 'dragover'].forEach(function(eventName) {
-                    uploadBox.addEventListener(eventName, function() {
+                ['dragenter', 'dragover'].forEach(function (eventName) {
+                    uploadBox.addEventListener(eventName, function () {
                         uploadBox.classList.add('is-dragover');
                     }, false);
                 });
 
-                ['dragleave', 'drop'].forEach(function(eventName) {
-                    uploadBox.addEventListener(eventName, function() {
+                ['dragleave', 'drop'].forEach(function (eventName) {
+                    uploadBox.addEventListener(eventName, function () {
                         uploadBox.classList.remove('is-dragover');
                     }, false);
                 });
 
-                uploadBox.addEventListener('drop', function(e) {
+                uploadBox.addEventListener('drop', function (e) {
                     var dt = e.dataTransfer;
                     var files = dt.files;
 
@@ -308,7 +309,7 @@
                         fileNameLabel.innerText = files[0].name;
 
                         // Auto-submit after a short delay for better UX
-                        setTimeout(function() {
+                        setTimeout(function () {
                             uploadForm.submit();
                         }, 100);
                     }
