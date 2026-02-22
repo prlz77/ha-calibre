@@ -38,7 +38,7 @@ class IngressMiddleware:
             environ["SCRIPT_NAME"] = ingress_path
             path_info = environ.get("PATH_INFO", "")
             if path_info.startswith(ingress_path):
-                environ["PATH_INFO"] = path_info[len(ingress_path):]
+                environ["PATH_INFO"] = path_info[len(ingress_path) :]
         return self.wsgi_app(environ, start_response)
 
 
@@ -79,12 +79,17 @@ def run_calibre_cmd(cmd_list):
 
 def get_books():
     """Fetch the full book list with format paths from the library."""
-    stdout = run_calibre_cmd([
-        "calibredb", "list",
-        "--library-path", CALIBRE_LIBRARY_PATH,
-        "--for-machine",
-        "--fields", "title,authors,formats",
-    ])
+    stdout = run_calibre_cmd(
+        [
+            "calibredb",
+            "list",
+            "--library-path",
+            CALIBRE_LIBRARY_PATH,
+            "--for-machine",
+            "--fields",
+            "title,authors,formats",
+        ]
+    )
     if not stdout:
         return []
     try:
@@ -96,13 +101,19 @@ def get_books():
 
 def get_book_formats(book_id):
     """Get the format file paths for a single book."""
-    stdout = run_calibre_cmd([
-        "calibredb", "list",
-        "--library-path", CALIBRE_LIBRARY_PATH,
-        "--for-machine",
-        "--fields", "formats",
-        "--search", f"id:{book_id}",
-    ])
+    stdout = run_calibre_cmd(
+        [
+            "calibredb",
+            "list",
+            "--library-path",
+            CALIBRE_LIBRARY_PATH,
+            "--for-machine",
+            "--fields",
+            "formats",
+            "--search",
+            f"id:{book_id}",
+        ]
+    )
     if not stdout:
         return []
     try:
@@ -152,11 +163,15 @@ def upload_book():
     file.save(filepath)
 
     try:
-        result = run_calibre_cmd([
-            "calibredb", "add",
-            "--library-path", CALIBRE_LIBRARY_PATH,
-            filepath,
-        ])
+        result = run_calibre_cmd(
+            [
+                "calibredb",
+                "add",
+                "--library-path",
+                CALIBRE_LIBRARY_PATH,
+                filepath,
+            ]
+        )
 
         if result is not None:
             flash(f"Successfully added {filename}", "success")
@@ -201,20 +216,26 @@ def convert_book(book_id):
     converted_file = os.path.join(UPLOAD_FOLDER, f"{base_name}.{target_format}")
 
     try:
-        convert_result = run_calibre_cmd([
-            "ebook-convert",
-            source_file,
-            converted_file,
-        ])
+        convert_result = run_calibre_cmd(
+            [
+                "ebook-convert",
+                source_file,
+                converted_file,
+            ]
+        )
 
         if convert_result is not None and os.path.exists(converted_file):
             # Add the converted format back to the library
-            add_result = run_calibre_cmd([
-                "calibredb", "add_format",
-                "--library-path", CALIBRE_LIBRARY_PATH,
-                str(book_id),
-                converted_file,
-            ])
+            add_result = run_calibre_cmd(
+                [
+                    "calibredb",
+                    "add_format",
+                    "--library-path",
+                    CALIBRE_LIBRARY_PATH,
+                    str(book_id),
+                    converted_file,
+                ]
+            )
             if add_result is not None:
                 flash(f"Successfully converted to {target_format.upper()}", "success")
             else:
@@ -233,11 +254,15 @@ def convert_book(book_id):
 
 @app.route("/delete/<int:book_id>", methods=["POST"])
 def delete_book(book_id):
-    result = run_calibre_cmd([
-        "calibredb", "remove",
-        "--library-path", CALIBRE_LIBRARY_PATH,
-        str(book_id),
-    ])
+    result = run_calibre_cmd(
+        [
+            "calibredb",
+            "remove",
+            "--library-path",
+            CALIBRE_LIBRARY_PATH,
+            str(book_id),
+        ]
+    )
 
     if result is not None:
         flash("Book deleted successfully", "success")
@@ -258,14 +283,20 @@ def sync_directory():
         return redirect(url_for("index"))
 
     logger.info("Starting sync from directory: %s", CALIBRE_SYNC_DIR)
-    
+
     # Using calibredb add -r --automerge ignore to avoid duplicates
-    result = run_calibre_cmd([
-        "calibredb", "add",
-        "-r", CALIBRE_SYNC_DIR,
-        "--library-path", CALIBRE_LIBRARY_PATH,
-        "--automerge", "ignore",
-    ])
+    result = run_calibre_cmd(
+        [
+            "calibredb",
+            "add",
+            "-r",
+            CALIBRE_SYNC_DIR,
+            "--library-path",
+            CALIBRE_LIBRARY_PATH,
+            "--automerge",
+            "ignore",
+        ]
+    )
 
     if result is not None:
         flash("Sync completed successfully", "success")

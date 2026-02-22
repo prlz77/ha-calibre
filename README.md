@@ -1,10 +1,10 @@
 # Home Assistant Add-on: Calibre Web UI
 
 [![Build Status](https://github.com/prlz77/ha-calibre/actions/workflows/ci.yml/badge.svg)](https://github.com/prlz77/ha-calibre/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/prlz77/ha-calibre/graph/badge.svg?token=YOUR_TOKEN_HERE)](https://codecov.io/gh/prlz77/ha-calibre)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![Buy me a coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/prlz77)
 
-I maintain this Home Assistant add-on in my free time. Keeping up with upstream changes, Home Assistant updates, and testing on real devices takes time and effort. 
+I maintain this Home Assistant add-on in my free time. Keeping up with upstream changes, Home Assistant updates, and testing on real devices takes time and effort.
 
 If this add-on saves you time, makes your ebook setup easier, or helps you bridge the gap between Calibre and your family's Kindles, I would be very grateful for your support!
 
