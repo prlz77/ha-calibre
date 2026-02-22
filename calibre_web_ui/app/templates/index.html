@@ -67,6 +67,21 @@
         .book-title {
             word-break: break-word;
         }
+
+        /* Mobile & Legacy Browser List Fallback
+           Ensures books stack vertically on small screens (<768px)
+           even if the browser doesn't support modern Flexbox. */
+        @media screen and (max-width: 768px) {
+            .columns {
+                display: block !important;
+            }
+
+            .columns>.column {
+                width: 100% !important;
+                display: block !important;
+                clear: both;
+            }
+        }
     </style>
 </head>
 
