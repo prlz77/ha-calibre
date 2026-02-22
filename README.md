@@ -6,7 +6,7 @@
 
 **TL;DR**: Convert your e-books to any format and download them on your e-reader through a clean web interface.
 
-[![Open your Home Assistant instance and show the add repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/repository_add.svg)](https://my.home-assistant.io/redirect/repository_add/?repository_url=https%3A%2F%2Fgithub.com%2Fprlz77%2Fha-calibre)
+[![Add to Home Assistant](https://img.shields.io/badge/Add%20to-Home%20Assistant-41BDF5?style=for-the-badge&logo=home-assistant&logoColor=white)](https://my.home-assistant.io/redirect/repository_add/?repository_url=https%3A%2F%2Fgithub.com%2Fprlz77%2Fha-calibre)
 
 If this add-on saves you time, makes your ebook setup easier, or helps you bridge the gap between Calibre and your family's e-readers, I would be very grateful for your support!
 
@@ -14,7 +14,7 @@ If this add-on saves you time, makes your ebook setup easier, or helps you bridg
 
 ---
 
-![Calibre Web UI](screenshots/ui.png)
+![Calibre Web UI](https://raw.githubusercontent.com/prlz77/ha-calibre/main/screenshots/ui.png)
 
 Calibre Web UI is a lightweight Home Assistant add-on designed to bridge the gap between Calibre's powerful command-line tools and your local network devices. It provides a clean, responsive web interface that allows you to manage your book library, convert formats on the fly, and download books directly to your devices—including e-readers with minimalist browsers.
 
