@@ -6,7 +6,7 @@
 
 **TL;DR**: Convert your e-books to any format and download them on your e-reader through a clean web interface.
 
-[![Add to Home Assistant](https://img.shields.io/badge/Add%20to-Home%20Assistant-41BDF5?style=for-the-badge&logo=home-assistant&logoColor=white)](https://my.home-assistant.io/redirect/repository_add/?repository_url=https%3A%2F%2Fgithub.com%2Fprlz77%2Fha-calibre)
+[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fprlz77%2Fha-calibre)
 
 If this add-on saves you time, makes your ebook setup easier, or helps you bridge the gap between Calibre and your family's e-readers, I would be very grateful for your support!
 
