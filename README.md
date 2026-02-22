@@ -3,9 +3,10 @@
 [![Build Status](https://github.com/prlz77/ha-calibre/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/prlz77/ha-calibre/actions/workflows/ci.yml)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-[![Open your Home Assistant instance and show the add repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/repository_add.svg)](https://my.home-assistant.io/redirect/repository_add/?repository_url=https%3A%2F%2Fgithub.com%2Fprlz77%2Fha-calibre)
 
 **TL;DR**: Convert your e-books to any format and download them on your e-reader through a clean web interface.
+
+[![Open your Home Assistant instance and show the add repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/repository_add.svg)](https://my.home-assistant.io/redirect/repository_add/?repository_url=https%3A%2F%2Fgithub.com%2Fprlz77%2Fha-calibre)
 
 If this add-on saves you time, makes your ebook setup easier, or helps you bridge the gap between Calibre and your family's e-readers, I would be very grateful for your support!
 
@@ -18,6 +19,17 @@ If this add-on saves you time, makes your ebook setup easier, or helps you bridg
 Calibre Web UI is a lightweight Home Assistant add-on designed to bridge the gap between Calibre's powerful command-line tools and your local network devices. It provides a clean, responsive web interface that allows you to manage your book library, convert formats on the fly, and download books directly to your devices—including e-readers with minimalist browsers.
 
 Whether you're looking to centralize your ebook collection on your Home Assistant instance or need a simple way to beam books to your devices without a USB cable, this add-on provides a seamless, resource-efficient solution.
+
+## Why this add-on? (Philosophy)
+
+There are excellent, full-featured tools like [janeczku/calibre-web](https://github.com/janeczku/calibre-web) available. This add-on is designed for a different use case:
+
+-   **Resource Efficient**: Minimal RAM and CPU footprint, making it ideal for standard Home Assistant hardware (Pi 4, Blue/Yellow/Green, etc.).
+-   **Zero Configuration**: Directly interacts with the Calibre CLI. No complex database shims or multi-user registration needed.
+-   **E-reader First**: The UI is built with Bulma, specifically tuned to be fast and responsive on the minimalist web browsers found on e-ink devices.
+
+> [!TIP]
+> If you need multi-user management, refined administrative controls, public registration, or OPDS support, [calibre-web](https://github.com/janeczku/calibre-web) is likely the better choice for you.
 
 ## Features
 
