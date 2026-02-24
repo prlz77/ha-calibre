@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.3
+
+### Fixed
+- **System Stability** — Removed `xvfb-run` overhead from the index page load and background sync loop. This eliminates Gunicorn worker timeouts and speeds up page loading.
+- **System Stability** — Increased backend timeout threshold for large conversions.
+
 ## 1.5.2
 
 ### Added

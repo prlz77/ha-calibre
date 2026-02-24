@@ -39,7 +39,7 @@ if [[ -n "$SYNC_DIR" ]] && [[ "$SYNC_INTERVAL" -gt 0 ]]; then
         while true; do
             sleep "$((SYNC_INTERVAL * 60))"
             echo "Starting periodic sync..."
-            xvfb-run -a calibredb add \
+            QT_QPA_PLATFORM=offscreen calibredb add \
                 -r "$SYNC_DIR" \
                 --library-path "$CALIBRE_LIBRARY_DIR" \
                 --automerge ignore \
@@ -51,4 +51,4 @@ fi
 
 echo "Starting Web Server..."
 # Run Flask via gunicorn (2 workers suitable for embedded/HA hardware)
-exec gunicorn --workers 2 --bind 0.0.0.0:8080 --timeout 120 main:app
+exec gunicorn --workers 2 --bind 0.0.0.0:8080 --timeout 600 main:app

@@ -56,17 +56,26 @@ if CALIBRE_SYNC_DIR:
 logger.info("Log Level set to: %s", LOG_LEVEL)
 
 
-def run_calibre_cmd(cmd_list):
-    """Run a calibre CLI command with xvfb for headless display support."""
-    full_cmd = ["xvfb-run", "-a"] + cmd_list
+def run_calibre_cmd(cmd_list, use_xvfb=False):
+    """Run a calibre CLI command with xvfb optionally for headless display support."""
+    if use_xvfb:
+        full_cmd = ["xvfb-run", "-a"] + cmd_list
+    else:
+        full_cmd = cmd_list
+
     logger.debug("Running command: %s", " ".join(full_cmd))
+
+    env = os.environ.copy()
+    env["QT_QPA_PLATFORM"] = "offscreen"
+
     try:
         result = subprocess.run(
             full_cmd,
             check=True,
             capture_output=True,
             text=True,
-            timeout=120,
+            timeout=600,
+            env=env,
         )
         return result.stdout
     except subprocess.TimeoutExpired:
@@ -221,7 +230,8 @@ def convert_book(book_id):
                 "ebook-convert",
                 source_file,
                 converted_file,
-            ]
+            ],
+            use_xvfb=True,
         )
 
         if convert_result is not None and os.path.exists(converted_file):
