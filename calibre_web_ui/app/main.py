@@ -144,12 +144,38 @@ def is_safe_library_path(filepath):
 @app.route("/")
 def index():
     books = get_books()
+    user_agent = request.headers.get("User-Agent", "")
+
+    # Detect Kindles and older e-readers
+    is_kindle = "Kindle" in user_agent or "Mobile" in user_agent
+
+    template = "index_kindle.html" if is_kindle else "index.html"
+
     return render_template(
-        "index.html",
+        template,
         books=books,
         sync_enabled=bool(CALIBRE_SYNC_DIR),
         sync_interval=CALIBRE_SYNC_INTERVAL,
+        is_kindle=is_kindle,
     )
+
+
+@app.after_request
+def add_security_headers(response):
+    # For Kindle/Older browsers, we want to actively discourage HTTPS upgrades
+    # since we are serving over HTTP 8080 and lack an SSL cert.
+    response.headers["Content-Security-Policy"] = (
+        "upgrade-insecure-requests; block-all-mixed-content"
+    )
+    # Note: upgrade-insecure-requests is often ignored by old browsers,
+    # but some experimental browsers use it to stay on HTTP if the site asks.
+
+    # Disable cache for index to ensure workers don't timeout on stale data
+    if request.endpoint == "index":
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+    return response
 
 
 @app.route("/upload", methods=["POST"])

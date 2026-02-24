@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calibre - Kindle Legacy</title>
+    <style>
+        body {
+            font-family: serif;
+            background: white;
+            color: black;
+            margin: 10px;
+            padding: 0;
+            line-height: 1.4;
+        }
+
+        h1 {
+            font-size: 1.4em;
+            border-bottom: 2px solid black;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .section {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .book {
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #666;
+            padding-bottom: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 12px;
+            border: 2px solid black;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            margin-right: 5px;
+            margin-top: 5px;
+        }
+
+        .btn-small {
+            padding: 4px 8px;
+            font-size: 0.9em;
+        }
+
+        .form-inline {
+            display: inline;
+        }
+
+        select {
+            padding: 4px;
+        }
+
+        .notif {
+            padding: 10px;
+            border: 2px solid black;
+            margin-bottom: 15px;
+        }
+
+        .success {
+            background: #eee;
+        }
+
+        .error {
+            background: #ddd;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>📖 Calibre Hub (Legacy)</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="notif {{ 'error' if category == 'error' else 'success' }}">
+        <strong>{{ category|upper }}:</strong> {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <div class="section">
+        <strong>Sync Folder</strong>
+        <form action="{{ url_for('sync_directory') }}" method="post">
+            <button type="submit" class="btn">Sync Now 🔄</button>
+        </form>
+    </div>
+
+    <h2>Your Library ({{ books|length }})</h2>
+
+    {% for book in books %}
+    <div class="book">
+        <div class="title">{{ book.title }}</div>
+        <div>by {{ book.authors or "Unknown" }}</div>
+
+        <div>
+            <strong>Download:</strong>
+            {% for fmt_path in book.formats %}
+            {% set fmt_ext = fmt_path.split('.')[-1] | upper %}
+            <a href="{{ url_for('download_book', filepath=fmt_path.lstrip('/')) }}" class="btn btn-small">{{ fmt_ext }}
+                ⬇️</a>
+            {% endfor %}
+        </div>
+
+        <div style="margin-top: 10px;">
+            <form action="{{ url_for('convert_book', book_id=book.id) }}" method="post" class="form-inline">
+                <select name="format">
+                    <option value="mobi">MOBI</option>
+                    <option value="azw3">AZW3</option>
+                    <option value="epub">EPUB</option>
+                    <option value="pdf">PDF</option>
+                </select>
+                <button type="submit" class="btn btn-small">Convert ⚙️</button>
+            </form>
+
+            <form action="{{ url_for('delete_book', book_id=book.id) }}" method="post" class="form-inline"
+                onsubmit="return confirm('Delete?');">
+                <button type="submit" class="btn btn-small" style="background:#eee;">Delete 🗑️</button>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <p>No books found.</p>
+    {% endfor %}
+
+    <footer style="margin-top: 30px; font-size: 0.8em; text-align: center;">
+        <hr>
+        Calibre Web Hub - Legacy View
+    </footer>
+
+</body>
+
+</html>

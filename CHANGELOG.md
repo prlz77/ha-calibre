@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.4
+
+### Added
+- **Kindle Legacy Mode** — Introduced a minimalist, standalone template for Kindle e-readers and older mobile devices.
+- **Connection Fix** — Added security headers to bypass Kindle browser's strict HTTPS requirements on local network IP addresses.
+
 ## 1.5.3
 
 ### Fixed
