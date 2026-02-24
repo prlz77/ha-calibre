@@ -2,9 +2,9 @@
 
 ## 1.5.4
 
-### Added
-- **Kindle Legacy Mode** — Introduced a minimalist, standalone template for Kindle e-readers and older mobile devices.
-- **Connection Fix** — Added security headers to bypass Kindle browser's strict HTTPS requirements on local network IP addresses.
+### Fixed
+- **Kindle Compatibility** — Fixed Kindle browser `Error code: -7` (ERR_TIMED_OUT) by implementing an in-memory 5-minute cache for the library `get_books` backend.
+- **Kindle Compatibility** — Re-added logic to serve `.azw3` files as `.azw` to bypass browser download restrictions.
 
 ## 1.5.3
 

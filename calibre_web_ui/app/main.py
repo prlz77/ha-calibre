@@ -86,8 +86,23 @@ def run_calibre_cmd(cmd_list, use_xvfb=False):
         return None
 
 
-def get_books():
+BOOKS_CACHE = None
+BOOKS_CACHE_TIME = 0.0
+
+
+def get_books(force_refresh=False):
     """Fetch the full book list with format paths from the library."""
+    global BOOKS_CACHE, BOOKS_CACHE_TIME
+    import time
+
+    # Cache for 5 minutes, or force refresh if requested
+    if (
+        not force_refresh
+        and BOOKS_CACHE is not None
+        and (time.time() - BOOKS_CACHE_TIME) < 300
+    ):
+        return BOOKS_CACHE
+
     stdout = run_calibre_cmd(
         [
             "calibredb",
@@ -102,7 +117,9 @@ def get_books():
     if not stdout:
         return []
     try:
-        return json.loads(stdout)
+        BOOKS_CACHE = json.loads(stdout)
+        BOOKS_CACHE_TIME = time.time()
+        return BOOKS_CACHE
     except json.JSONDecodeError:
         logger.error("Failed to parse calibredb list output")
         return []
@@ -144,38 +161,12 @@ def is_safe_library_path(filepath):
 @app.route("/")
 def index():
     books = get_books()
-    user_agent = request.headers.get("User-Agent", "")
-
-    # Detect Kindles and older e-readers
-    is_kindle = "Kindle" in user_agent or "Mobile" in user_agent
-
-    template = "index_kindle.html" if is_kindle else "index.html"
-
     return render_template(
-        template,
+        "index.html",
         books=books,
         sync_enabled=bool(CALIBRE_SYNC_DIR),
         sync_interval=CALIBRE_SYNC_INTERVAL,
-        is_kindle=is_kindle,
     )
-
-
-@app.after_request
-def add_security_headers(response):
-    # For Kindle/Older browsers, we want to actively discourage HTTPS upgrades
-    # since we are serving over HTTP 8080 and lack an SSL cert.
-    response.headers["Content-Security-Policy"] = (
-        "upgrade-insecure-requests; block-all-mixed-content"
-    )
-    # Note: upgrade-insecure-requests is often ignored by old browsers,
-    # but some experimental browsers use it to stay on HTTP if the site asks.
-
-    # Disable cache for index to ensure workers don't timeout on stale data
-    if request.endpoint == "index":
-        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-        response.headers["Pragma"] = "no-cache"
-        response.headers["Expires"] = "0"
-    return response
 
 
 @app.route("/upload", methods=["POST"])
@@ -209,6 +200,7 @@ def upload_book():
         )
 
         if result is not None:
+            get_books(force_refresh=True)
             flash(f"Successfully added {filename}", "success")
         else:
             flash(f"Failed to add {filename}", "error")
@@ -273,6 +265,7 @@ def convert_book(book_id):
                 ]
             )
             if add_result is not None:
+                get_books(force_refresh=True)
                 flash(f"Successfully converted to {target_format.upper()}", "success")
             else:
                 flash("Conversion succeeded but failed to add to library", "error")
@@ -301,6 +294,7 @@ def delete_book(book_id):
     )
 
     if result is not None:
+        get_books(force_refresh=True)
         flash("Book deleted successfully", "success")
     else:
         flash("Failed to delete book", "error")
@@ -335,6 +329,7 @@ def sync_directory():
     )
 
     if result is not None:
+        get_books(force_refresh=True)
         flash("Sync completed successfully", "success")
     else:
         flash("Sync failed or encountered errors", "error")
