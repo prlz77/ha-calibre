@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.5
+
+### Fixed
+- **Kindle Compatibility** — Improved backend performance via server-side caching to resolve connection timeouts (Error -7) on e-readers.
+- **Kindle Compatibility** — Restored `.azw3` as `.azw` download logic for wider device support.
+
 ## 1.5.4
 
 ### Fixed
